@@ -1,9 +1,7 @@
 package com.example.firestoretutorial;
 
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,6 +37,15 @@ class DataBaseTest {
                     });
                 }
         );
+    }
+
+    @Test
+    public void testCollectionGroup() throws ExecutionException, InterruptedException {
+        final Query data = dataBase.firestore.collectionGroup("20231019");
+        final ApiFuture<QuerySnapshot>  querySnapshot = data.get();
+        querySnapshot.get().getDocuments().forEach(leafData -> {
+            System.out.println(leafData);
+        });
     }
 
 
